@@ -12,11 +12,12 @@ from utils.data_utils import fetch
 from utils.loss import mpjpe, p_mpjpe, compute_PCK, compute_AUC
 from utils.utils import AverageMeter
 
+ONNX_EXPORT = True
 
 ####################################################################
 # ### evaluate p1 p2 pck auc dataset with test-flip-augmentation
 ####################################################################
-def evaluate(data_loader, model_pos_eval, device, summary=None, writer=None, key='', tag='', flipaug=''):
+def evaluate(data_loader, model_pos_eval, device, summary=None, writer=None, key='', tag='', flipaug='', posenet_name=""):
     batch_time = AverageMeter()
     data_time = AverageMeter()
     epoch_p1 = AverageMeter()
@@ -56,6 +57,15 @@ def evaluate(data_loader, model_pos_eval, device, summary=None, writer=None, key
 
             else:
                 outputs_3d = model_pos_eval(inputs_2d.view(num_poses, -1)).view(num_poses, -1, 3).cpu()
+
+        if ONNX_EXPORT:
+            import os, sys
+            os.makedirs("onnx", exist_ok=True)
+            onnx_path = "onnx/{}.onnx".format(posenet_name)
+            onnx_sim_path = "onnx/{}_sim.onnx".format(posenet_name)
+            torch.onnx.export(model_pos_eval, inputs_2d.view(num_poses, -1), onnx_path, verbose=False, )
+            os.system("python -m onnxsim {} {}".format(onnx_path, onnx_sim_path))
+            sys.exit()
 
         # caculate the relative position.
         targets_3d = targets_3d[:, :, :] - targets_3d[:, :1, :]  # the output is relative to the 0 joint

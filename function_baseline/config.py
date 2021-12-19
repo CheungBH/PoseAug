@@ -43,7 +43,7 @@ def get_parse_args():
     parser.add_argument('--downsample', default=1, type=int, metavar='FACTOR', help='downsample frame rate by factor')
     parser.add_argument('--pretrain', default=False, type=lambda x: (str(x).lower() == 'true'), help='used in poseaug')
     parser.add_argument('--s1only', default=False, type=lambda x: (str(x).lower() == 'true'), help='train S1 only')
-    parser.add_argument('--num_workers', default=2, type=int, metavar='N', help='num of workers for data loading')
+    parser.add_argument('--num_workers', default=0, type=int, metavar='N', help='num of workers for data loading')
 
     args = parser.parse_args()
 

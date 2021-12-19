@@ -37,7 +37,7 @@ def main(args):
 
     print('==> Evaluating...')
 
-    error_h36m_p1, error_h36m_p2 = evaluate(data_dict['H36M_test'], model_pos, device)
+    error_h36m_p1, error_h36m_p2 = evaluate(data_dict['H36M_test'], model_pos, device, posenet_name=args.posenet_name)
     print('H36M: Protocol #1   (MPJPE) overall average: {:.2f} (mm)'.format(error_h36m_p1))
     print('H36M: Protocol #2 (P-MPJPE) overall average: {:.2f} (mm)'.format(error_h36m_p2))
 
