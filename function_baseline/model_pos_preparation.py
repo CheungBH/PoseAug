@@ -27,7 +27,8 @@ def model_pos_preparation(args, dataset, device):
         model_pos = WrapSTGCN(p_dropout=args.dropout).to(device)
 
     elif args.posenet_name == 'mlp':
-        model_pos = LinearModel(num_joints * 2, (num_joints - 1) * 3, num_stage=args.stages, p_dropout=args.dropout)
+        model_pos = LinearModel(num_joints * 2, (num_joints - 1) * 3, num_stage=args.stages, p_dropout=args.dropout,
+                                linear_size=args.linear_size)
 
     elif args.posenet_name == 'videopose':
         filter_widths = [1]
