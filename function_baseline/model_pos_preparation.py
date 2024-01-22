@@ -49,7 +49,7 @@ def model_pos_preparation(args, dataset, device):
         posenet_pretrain_path = glob.glob(tmp_path)
         assert len(posenet_pretrain_path) == 1, 'suppose only 1 pretrain path for each model setting, ' \
                                                 'please delete the redundant file'
-        tmp_ckpt = torch.load(posenet_pretrain_path[0])
+        tmp_ckpt = torch.load(posenet_pretrain_path[0], map_location=device)
         model_pos.load_state_dict(tmp_ckpt['state_dict'])
         print('==> Pretrained posenet loaded')
     else:

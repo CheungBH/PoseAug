@@ -12,7 +12,7 @@ from utils.data_utils import fetch
 from utils.loss import mpjpe, p_mpjpe, compute_PCK, compute_AUC
 from utils.utils import AverageMeter
 
-ONNX_EXPORT = True
+ONNX_EXPORT = False
 
 ####################################################################
 # ### evaluate p1 p2 pck auc dataset with test-flip-augmentation
